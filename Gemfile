@@ -40,3 +40,6 @@ gem 'spring',        group: :development
 gem 'bootstrap-sass', '~> 3.3.5.1'
 gem 'sprockets', '2.11.0'
 gem 'sass-rails'
+
+# User authentication with Devise
+gem 'devise', '>= 3.2.4'
