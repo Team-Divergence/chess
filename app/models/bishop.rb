@@ -1,3 +1,3 @@
-class Bishop 
+class Bishop < Piece 
   
 end
