@@ -12,11 +12,11 @@ class Piece < ActiveRecord::Base
     current_y = piece.current_position_y
     x_difference = current_x - x
     y_difference = current_y - y
-    all_pieces = Game.find(self.game_id).pieces
+    all_pieces = Game.find(game_id).pieces
 
     if (x_difference.abs != y_difference.abs) && (x_difference != 0) && (y_difference != 0)
-      #puts "Invalid input"
-      #flash.now[:alert] = 'Invalid input'
+      # puts "Invalid input"
+      # flash.now[:alert] = 'Invalid input'
       return
     end
 
@@ -25,19 +25,19 @@ class Piece < ActiveRecord::Base
     new_y = y
 
     while !check
-      # starting from the destination, moves through 
+      # starting from the destination, moves through
       # each square in between the destination and current
 
       if new_x > current_x
-        new_x = new_x - 1
+        new_x -= 1
       elsif new_x < current_x
-        new_x = new_x + 1
+        new_x += 1
       end
 
       if new_y > current_y
-        new_y = new_y - 1
+        new_y -= 1
       elsif new_y < current_y
-        new_y = new_y + 1
+        new_y += 1
       end
 
       # if at current position stop looping
@@ -55,7 +55,6 @@ class Piece < ActiveRecord::Base
 
     end
 
-    return false
-
+    false
   end
 end

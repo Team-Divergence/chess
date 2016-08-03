@@ -5,7 +5,7 @@ class GamesController < ApplicationController
     @game = Game.new
   end
 
-  def  create
+  def create
     @game = current_user.white_games.create(game_params)
     if @game.valid?
       redirect_to user_path(current_user)
@@ -21,11 +21,11 @@ class GamesController < ApplicationController
   def update
     @game = Game.find(params[:id])
 
-    if @game.black_user != nil
+    if !@game.black_user.nil?
       return render text: 'Not Allowed', status: :forbidden
     end
 
-    @game.update_attributes(black_user_id: current_user.id) 
+    @game.update_attributes(black_user_id: current_user.id)
     redirect_to game_path(@game)
   end
 
@@ -34,5 +34,4 @@ class GamesController < ApplicationController
   def game_params
     params.require(:game).permit(:name)
   end
-
 end

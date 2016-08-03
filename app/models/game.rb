@@ -5,12 +5,10 @@ class Game < ActiveRecord::Base
   has_many :pieces
 
   # Query the database for games that don't have a black player
-  scope :open_games, -> {where(black_user_id: nil)}
-  
+  scope :open_games, -> { where(black_user_id: nil) }
   after_create :populate_board!
 
   def populate_board!
-
     # Black Pieces
     (0..7).each do |i|
       Pawn.create(game_id: id, current_position_x: i, current_position_y: 1, color: :black)
@@ -44,7 +42,5 @@ class Game < ActiveRecord::Base
 
     Queen.create(game_id: id, current_position_x: 3, current_position_y: 7, color: :white)
     King.create(game_id: id, current_position_x: 4, current_position_y: 7, color: :white)
-
   end
-
 end
