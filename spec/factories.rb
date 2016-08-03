@@ -1,6 +1,5 @@
 FactoryGirl.define do
-
-  factory :game do 
+  factory :game do
     name "Hello"
   end
 
@@ -9,5 +8,4 @@ FactoryGirl.define do
     current_position_y 4
     association :game
   end
-
 end

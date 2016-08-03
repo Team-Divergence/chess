@@ -1,5 +1,4 @@
-class King < Piece 
-
+class King < Piece
   def is_valid_move?(move_to_x, move_to_y)
     # Check to see if new position is on board
     if move_to_x < 0 || move_to_x > 7 || move_to_y < 0 || move_to_y > 7
@@ -13,5 +12,4 @@ class King < Piece
       end
     end
   end
-  
 end
