@@ -2,6 +2,22 @@ class Piece < ActiveRecord::Base
   belongs_to :game
   has_many :moves
 
+  def is_valid_move?(move_to_x, move_to_y)
+    move_to_piece = Piece.find_by(current_position_x: move_to_x, current_position_y: move_to_y)   
+    #check move is on the board
+    if move_to_x < 0 || move_to_x > 7 || move_to_y < 0 || move_to_y > 7
+      return false
+    #check move is not to the same square
+    elsif current_position_x == move_to_x && current_position_y == move_to_y
+      return false
+    #check move is not to square that contains player's own piece
+    elsif move_to_piece.present? && self.color == move_to_piece.color 
+      return false
+    else
+      return true
+    end
+  end
+
   def move_to!(new_x, new_y)
     piece = self
     # variable to see if space is occupied
