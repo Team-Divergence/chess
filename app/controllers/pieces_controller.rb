@@ -12,7 +12,7 @@ class PiecesController < ApplicationController
     x = params[:piece][:current_position_x].to_i
     y = params[:piece][:current_position_y].to_i
     if @piece.valid_move?(x, y)
-      @piece.update_attributes(piece_params)
+      @piece.move_to!(x, y)
       render json: nil, status: :ok
       #redirect_to game_path(@game)
     else
