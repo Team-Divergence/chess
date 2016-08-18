@@ -1,6 +1,6 @@
 class Queen < Piece
   def valid_move? (position_x, position_y)
-    if ( is_obstructed?(position_x, position_y))
+    if (obstructed?(position_x, position_y))
       return false
     end
      if ((super == true) &&

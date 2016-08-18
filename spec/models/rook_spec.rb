@@ -8,7 +8,7 @@ RSpec.describe Rook, type: :model do
     it 'should return true when a move is valid' do
       expect(rook.valid_move?(4, 3)).to be(true)
       expect(rook.valid_move?(4, 6)).to be(true)
-      expect(rook.valid_move?(2, 4)).to be(true)
+      expect(rook.valid_move?(1, 4)).to be(true)
       expect(rook.valid_move?(7, 4)).to be(true)
     end
 

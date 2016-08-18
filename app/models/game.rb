@@ -1,6 +1,6 @@
 class Game < ActiveRecord::Base
   validates :name, presence: true
-  
+
   belongs_to :white_user, class_name: 'User'
   belongs_to :black_user, class_name: 'User'
   has_many :moves
@@ -9,6 +9,22 @@ class Game < ActiveRecord::Base
   # Query the database for games that don't have a black player
   scope :open_games, -> { where(black_user_id: nil) }
   after_create :populate_board!
+
+  def check?(color)
+    king = pieces.find_by(type: 'King', color: color)
+    if color == 'white'
+      opponents = pieces.where(color: 'black').to_a
+    else
+      opponents = pieces.where(color: 'white').to_a
+    end
+
+    opponents.each do |piece|
+      if piece.valid_move?(king.current_position_x, king.current_position_y)
+        return true
+      end
+    end
+    false
+  end
 
   def populate_board!
     # Black Pieces
