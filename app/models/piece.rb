@@ -22,21 +22,14 @@ class Piece < ActiveRecord::Base
 
   # Possibly needs refactoring - shares common code with is_valid_move
   def move_to!(new_x, new_y)
-    piece = self
     # variable to see if space is occupied
-    is_space_occupied = Piece.find_by(current_position_x: new_x, current_position_y: new_y)
-
+    target_piece = Piece.find_by(current_position_x: new_x, current_position_y: new_y)
     # if space is occupied and it's a different color
-    if is_space_occupied && is_space_occupied.color != piece.color
-      is_space_occupied.destroy()
-      piece.update_attributes(current_position_x: new_x, current_position_y: new_y, has_moved: true)
-    # if space is occupied and it's the same color
-    # actutally already checked above in valid_move?
-    # elsif is_space_occupied && is_space_occupied.color == piece.color
-    #   return "Error, You can't capture your own piece."
-    # # if it's unoccupied
+    if target_piece && target_piece.color != color
+      target_piece.destroy()
+      update_attributes(current_position_x: new_x, current_position_y: new_y, has_moved: true)
     else
-      piece.update_attributes(current_position_x: new_x, current_position_y: new_y, has_moved: true)
+      update_attributes(current_position_x: new_x, current_position_y: new_y, has_moved: true)
     end
   end
 
