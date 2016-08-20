@@ -1,16 +1,15 @@
 class PiecesController < ApplicationController
   before_action :authenticate_user!
 
-  def show
-    @piece = Piece.find(params[:id])
-    @game = @piece.game
+  before_filter do
+  @piece = Piece.find(params[:id])
+  @game = @piece.game
   end
 
-  def update
-    @piece = Piece.find(params[:id])
+  
+  def update    
     old_x = @piece.current_position_x
     old_y = @piece.current_position_y
-    @game = @piece.game
     x = params[:piece][:current_position_x].to_i
     y = params[:piece][:current_position_y].to_i
     if @piece.valid_move?(x, y)
