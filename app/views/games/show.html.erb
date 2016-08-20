@@ -17,16 +17,6 @@
     });
 
     $('td a').draggable({
-      start: function(ev, ui) {  
-        $('.ui-droppable').each(function(i, el) {
-          if (!$(el).find('.ui-draggable').length){
-            $(el).droppable('enable');
-          }
-          else {
-            $(el).droppable('disable');
-          }
-        });
-      },
       revert: "invalid",
       revertDuration: 0
     });
@@ -50,9 +40,11 @@
           $(ui.helper).css({top: 0,left: 0});
         })
         .done(function(msg) {
+          if (droppedOn.find('.ui-draggable').length){
+            droppedOn.find('.ui-draggable').remove();
+          }
           $(dropped).detach().css({top: 0,left: 0}).appendTo(droppedOn);
           droppedOn.addClass("highlight");
-          $(ev['target']).droppable('disable');
         });
 
       }

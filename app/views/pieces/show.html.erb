@@ -8,14 +8,14 @@
             <td class='x-position-<%= column %> highlight' data-x-position='<%= row %>' data-y-position='<%= column %>' >            
               <% query_result = @game.pieces.where(current_position_x:column, current_position_y: row).last %>
               <% if query_result != nil %>
-                <%= image_tag query_result.symbol %>
+                <%= image_tag query_result.image %>
               <% end %>
             </td>
           <% else %>
               <td class='x-position-<%= column %>' data-x-position='<%= row %>' data-y-position='<%= column %>' >  
                 <% query_result = @game.pieces.where(current_position_x:column, current_position_y: row).last %>
                 <% if query_result != nil %>          
-                  <%= image_tag query_result.symbol %>
+                  <%= image_tag query_result.image %>
                 <% end %>                      
               </td>
           <% end %>
