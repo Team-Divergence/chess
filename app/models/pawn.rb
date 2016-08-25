@@ -1,24 +1,25 @@
 class Pawn < Piece
   def valid_move?(move_to_x, move_to_y)
-    return false if (current_position_x - move_to_x).abs != 0 
-    if has_moved == true
-      if color == 'white' && (current_position_y - move_to_y) == 1 
-        return true
-      elsif 
-        color == 'black' && (current_position_y - move_to_y) == -1
-        return true
+    return false unless super && !obstructed?(move_to_x, move_to_y)
+    return false if current_position_x != move_to_x 
+    if has_moved
+      if color == 'white' && (current_position_y - move_to_y) == 1
+        true
+      elsif          
+        color == 'black' && (move_to_y - current_position_y) == 1
+        true
       else
-        return false
-      end
+        false
+      end 
     else
       if color == 'white' && (1..2) === (current_position_y - move_to_y)
-        return true
-      elsif 
-        color == 'black' && (current_position_y - move_to_y) == -1 || (current_position_y - move_to_y) == -2
-        return true
+        true
+      elsif
+        color == 'black' && (1..2) === (move_to_y - current_position_y) 
+        true
       else
-        return false
-      end      
-    end
+        false      
+      end
+    end      
   end
 end
