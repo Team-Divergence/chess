@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160826071359) do
+ActiveRecord::Schema.define(version: 20160826072134) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20160826071359) do
     t.integer "white_user_id"
     t.integer "black_user_id"
     t.integer "winning_user_id"
+    t.integer "turn"
   end
 
   create_table "pieces", force: true do |t|
