@@ -1,6 +1,5 @@
 class Piece < ActiveRecord::Base
   belongs_to :game
-  has_many :moves
 
   def valid_move?(move_to_x, move_to_y)
     difference_x = move_to_x - current_position_x
