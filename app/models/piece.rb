@@ -19,6 +19,11 @@ class Piece < ActiveRecord::Base
     end
   end
 
+  def capture?(move_to_x, move_to_y)
+    capture_piece = game.pieces.find_by(current_position_x: move_to_x, current_position_y: move_to_y)
+    capture_piece && capture_piece.color != color
+  end
+
   # Possibly needs refactoring - shares common code with is_valid_move
   def move_to!(new_x, new_y)
     # variable to see if space is occupied
