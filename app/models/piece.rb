@@ -1,6 +1,5 @@
 class Piece < ActiveRecord::Base
   belongs_to :game
-  has_many :moves
 
   def valid_move?(move_to_x, move_to_y)
     difference_x = move_to_x - current_position_x
@@ -18,6 +17,11 @@ class Piece < ActiveRecord::Base
     else
       return true
     end
+  end
+
+  def capture?(move_to_x, move_to_y)
+    capture_piece = game.pieces.find_by(current_position_x: move_to_x, current_position_y: move_to_y)
+    capture_piece && capture_piece.color != color
   end
 
   # Possibly needs refactoring - shares common code with is_valid_move
