@@ -11,6 +11,14 @@ class Game < ActiveRecord::Base
   # Query the database for games that don't have a black player
   scope :open_games, -> { where(black_user_id: nil) }
 
+  def switch_turns
+    if turn == white_user_id
+      update_attributes(turn: black_user_id)      
+    else
+      update_attributes(turn: white_user_id)      
+    end
+  end
+
   def set_default_turn
     update_attributes(turn: white_user_id)
   end
