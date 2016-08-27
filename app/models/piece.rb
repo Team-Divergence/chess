@@ -24,19 +24,19 @@ class Piece < ActiveRecord::Base
     capture_piece && capture_piece.color != color
   end
 
-  # Possibly needs refactoring - shares common code with is_valid_move
-  def move_to!(new_x, new_y)
-    # variable to see if space is occupied
-    target_piece = Piece.find_by(current_position_x: new_x, current_position_y: new_y)
-    # if space is occupied and it's a different color
-    if target_piece && target_piece.color != color
-      target_piece.destroy()
-      update_attributes(current_position_x: new_x, current_position_y: new_y, has_moved: true)
-    else
-      update_attributes(current_position_x: new_x, current_position_y: new_y, has_moved: true)
+  def move_to!(move_to_x, move_to_y)
+    unless valid_move?(move_to_x, move_to_y)
+      raise 'Not valid move!'
     end
+    # variable to see if space is occupied
+    capture_piece = game.pieces.find_by(current_position_x: move_to_x, current_position_y: move_to_y)
+    # if space is occupied and it's a different color
+    if capture?(move_to_x, move_to_y)
+      capture_piece.destroy()
+    end
+      update_attributes(current_position_x: move_to_x, current_position_y: move_to_y, has_moved: true)
+      game.switch_turns
   end
-
 
   def image
     "#{color}-#{type.downcase}.png"
