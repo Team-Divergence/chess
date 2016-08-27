@@ -70,9 +70,97 @@ RSpec.describe Piece, type: :model do
 
   describe 'move_to!' do
     it 'should update has_moved attribute to true' do
+
       piece_3.move_to!(0, 4)
       expect(piece_3.has_moved).to eq(true)
+
     end
+
+    it "should update Queen's position on update" do
+      # game.populate_board!
+
+    piece_1.destroy
+    piece_2.destroy
+    piece_3.destroy
+    piece_4.destroy
+    piece_5.destroy
+    piece_6.destroy
+    piece_7.destroy
+    piece_8.destroy
+    piece_9.destroy
+    piece_10.destroy
+    piece_11.destroy
+
+
+
+      # Black pieces
+
+      bpawn1 =  FactoryGirl.create(:piece, current_position_x: 0, current_position_y: 1, type: 'Pawn')
+      bpawn2 =  FactoryGirl.create(:piece, current_position_x: 1, current_position_y: 1, type: 'Pawn')
+      bpawn3 =  FactoryGirl.create(:piece, current_position_x: 2, current_position_y: 1, type: 'Pawn')
+      bpawn4 =  FactoryGirl.create(:piece, current_position_x: 3, current_position_y: 1, type: 'Pawn')
+      bpawn5 =  FactoryGirl.create(:piece, current_position_x: 4, current_position_y: 1, type: 'Pawn')
+      bpawn6 =  FactoryGirl.create(:piece, current_position_x: 5, current_position_y: 1, type: 'Pawn')
+      bpawn7 =  FactoryGirl.create(:piece, current_position_x: 6, current_position_y: 1, type: 'Pawn')
+      bpawn8 =  FactoryGirl.create(:piece, current_position_x: 7, current_position_y: 1, type: 'Pawn')
+
+
+      brook1 = FactoryGirl.create(:piece, current_position_x: 0, current_position_y: 0, type: 'Rook')
+      brook2 = FactoryGirl.create(:piece, current_position_x: 7, current_position_y: 0, type: 'Rook')
+
+      bKnight1 = FactoryGirl.create(:piece, current_position_x: 1, current_position_y: 0, type: 'Knight')
+      bKnight2 = FactoryGirl.create(:piece, current_position_x: 6, current_position_y: 0, type: 'Knight')
+
+      bBishop1 = FactoryGirl.create(:piece, current_position_x: 2, current_position_y: 0, type: 'Bishop')
+      bBishop2 = FactoryGirl.create(:piece, current_position_x: 5, current_position_y: 0, type: 'Bishop')
+
+      bQueen = FactoryGirl.create(:piece, current_position_x: 3, current_position_y: 0, type: 'Queen')
+      bKing = FactoryGirl.create(:piece, current_position_x: 4, current_position_y: 0, type: 'King')
+
+
+      # White pieces
+
+      wpawn1  = FactoryGirl.create(:piece, current_position_x: 0, current_position_y: 6, type: 'Pawn')
+      wpawn2  = FactoryGirl.create(:piece, current_position_x: 1, current_position_y: 6, type: 'Pawn')
+      wpawn3  = FactoryGirl.create(:piece, current_position_x: 2, current_position_y: 6, type: 'Pawn')
+      wpawn4  = FactoryGirl.create(:piece, current_position_x: 3, current_position_y: 6, type: 'Pawn')
+      wpawn5  = FactoryGirl.create(:piece, current_position_x: 4, current_position_y: 6, type: 'Pawn')
+      wpawn6  = FactoryGirl.create(:piece, current_position_x: 5, current_position_y: 6, type: 'Pawn')
+      wpawn7  = FactoryGirl.create(:piece, current_position_x: 6, current_position_y: 6, type: 'Pawn')
+      wpawn8  = FactoryGirl.create(:piece, current_position_x: 7, current_position_y: 6, type: 'Pawn')
+
+
+      wQueen = FactoryGirl.create(:piece, current_position_x: 3, current_position_y: 7, type: "Queen")
+      wKing = FactoryGirl.create(:piece, current_position_x: 4, current_position_y: 7, type: "King")
+
+
+
+      wrook1 = FactoryGirl.create(:piece, current_position_x: 0, current_position_y: 7, type: 'Rook')
+      wrook2 = FactoryGirl.create(:piece, current_position_x: 7, current_position_y: 7, type: 'Rook')
+
+      wKnight = FactoryGirl.create(:piece, current_position_x: 1, current_position_y: 7, type: 'Knight')
+      wKnight = FactoryGirl.create(:piece, current_position_x: 6, current_position_y: 7, type: 'Knight')
+
+      wBishop1 = FactoryGirl.create(:piece, current_position_x: 2, current_position_y: 7, type: 'Bishop')
+      wBishop2 = FactoryGirl.create(:piece, current_position_x: 5, current_position_y: 7, type: 'Bishop')
+
+      wQueen = FactoryGirl.create(:piece, current_position_x: 3, current_position_y: 7, type: 'Queen')
+      wKing = FactoryGirl.create(:piece, current_position_x: 4, current_position_y: 7, type: 'King')
+
+
+      wpawn4.move_to!(3,4)
+      wQueen.move_to!(7,3)
+
+      expect(wpawn4.current_position_x).to eq(3)
+      expect(wpawn4.current_position_y).to eq(4)
+
+      expect(wQueen.current_position_x).to eq(7)
+      expect(wQueen.current_position_y).to eq(3)
+
+
+
+    end
+
   end
 
 end

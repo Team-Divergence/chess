@@ -13,16 +13,16 @@ class Game < ActiveRecord::Base
 
   def switch_turns
     if turn == white_user_id
-      update_attributes(turn: black_user_id)      
+      update_attributes(turn: black_user_id)
     else
-      update_attributes(turn: white_user_id)      
+      update_attributes(turn: white_user_id)
     end
   end
 
   def set_default_turn
     update_attributes(turn: white_user_id)
   end
- 
+
   def check?(color)
     king = pieces.find_by(type: 'King', color: color)
     if color == 'white'
