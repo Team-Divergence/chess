@@ -43,7 +43,7 @@ end
 # gem 'capistrano-rails', group: :development
 
 # Use debugger
-# gem 'debugger', group: [:development, :test]
+#gem 'debugger', group: [:development, :test]
 
 # Twitter Bootstrap 3
 gem 'bootstrap-sass', '~> 3.3.5.1'
