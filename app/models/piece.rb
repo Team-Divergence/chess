@@ -1,9 +1,10 @@
 class Piece < ActiveRecord::Base
   belongs_to :game
 
+
   def valid_move?(move_to_x, move_to_y)
 
-    move_to_piece = Piece.find_by(current_position_x: move_to_x, current_position_y: move_to_y, game: game)
+    move_to_piece = game.pieces.find_by(current_position_x: move_to_x, current_position_y: move_to_y)
     #check move is on the board
     if move_to_x < 0 || move_to_x > 7 || move_to_y < 0 || move_to_y > 7
       return false
@@ -46,19 +47,19 @@ class Piece < ActiveRecord::Base
     difference_x = (move_to_x - self.current_position_x) # .abs
     difference_y = (move_to_y - self.current_position_y) # .abs
     count = 1
-
+    
     # vertical
     if difference_x == 0
       while count < difference_y.abs
         if difference_y < 0
-          piece = Piece.find_by(current_position_x: move_to_x, current_position_y: move_to_y + count)
+          piece = game.pieces.find_by(current_position_x: move_to_x, current_position_y: move_to_y + count)
           if piece.present?
             return true
           else
             count += 1
           end
         else
-          piece = Piece.find_by(current_position_x: move_to_x, current_position_y: move_to_y - count)
+          piece = game.pieces.find_by(current_position_x: move_to_x, current_position_y: move_to_y - count)
           if piece.present?
             return true
           else
@@ -73,14 +74,14 @@ class Piece < ActiveRecord::Base
     if difference_y == 0
       while count < difference_x.abs
         if difference_x < 0
-          piece = Piece.find_by(current_position_x: move_to_x - count, current_position_y: move_to_y)
+          piece = game.pieces.find_by(current_position_x: move_to_x - count, current_position_y: move_to_y)
           if piece.present?
             return true
           else
             count += 1
           end
         else
-          piece = Piece.find_by(current_position_x: move_to_x + count, current_position_y: move_to_y)
+          piece = game.pieces.find_by(current_position_x: move_to_x + count, current_position_y: move_to_y)
           if piece.present?
             return true
           else
@@ -92,12 +93,11 @@ class Piece < ActiveRecord::Base
     end
 
     # diagonal
-
-    # bottom left moving up and right
     if difference_x.abs == difference_y.abs
       while count < difference_x.abs
+        # bottom left moving up and right
         if difference_x > 0 && difference_y < 0
-          piece = Piece.find_by(current_position_x: move_to_x - count, current_position_y: move_to_y + count)
+          piece = game.pieces.find_by(current_position_x: move_to_x - count, current_position_y: move_to_y + count)
           if piece.present?
             return true
           else
@@ -107,7 +107,7 @@ class Piece < ActiveRecord::Base
 
         # bottom right moving up and left
         elsif difference_x < 0 && difference_y < 0
-          piece = Piece.find_by(current_position_x: move_to_x + count, current_position_y: move_to_y + count)
+          piece = game.pieces.find_by(current_position_x: move_to_x + count, current_position_y: move_to_y + count)
           if piece.present?
             return true
           else
@@ -116,7 +116,7 @@ class Piece < ActiveRecord::Base
           end
         #top left moving down and right
         elsif difference_x > 0 && difference_y > 0
-            piece = Piece.find_by(current_position_x: move_to_x - count, current_position_y: move_to_y - count)
+            piece = game.pieces.find_by(current_position_x: move_to_x - count, current_position_y: move_to_y - count)
             if piece.present?
               return true
             else
@@ -125,7 +125,7 @@ class Piece < ActiveRecord::Base
             end
         # top right moving down and left
         elsif difference_x < 0 && difference_y > 0  # maybe should just be else
-          piece = Piece.find_by(current_position_x: move_to_x + count, current_position_y: move_to_y - count)
+          piece = game.pieces.find_by(current_position_x: move_to_x + count, current_position_y: move_to_y - count)
           if piece.present?
             return true
           else

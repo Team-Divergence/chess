@@ -13,6 +13,7 @@ RSpec.describe Piece, type: :model do
   piece_9 = FactoryGirl.create(:piece, current_position_x: 3, current_position_y: 4)
   piece_10 = FactoryGirl.create(:piece, current_position_x: 7, current_position_y: 7)
   piece_11 = FactoryGirl.create(:piece, current_position_x: 7, current_position_y: 1)
+  
   describe 'obstructed?' do
     context 'when there is an obstruction' do
       it 'should return true' do
