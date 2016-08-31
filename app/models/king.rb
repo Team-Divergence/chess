@@ -15,6 +15,25 @@ class King < Piece
     (x_diff <= 1) && (y_diff <=1)
   end
 
+  # determine if king can move himself out of check
+  def can_move_out_of_check?
+    starting_x = current_position_x
+    starting_y = current_position_y
+    success = false
+    ((current_position_x - 1)..(current_position_x + 1)).each do |x|
+      ((current_position_y - 1)..(current_position_y + 1)).each do |y|
+        update_attributes(current_position_x: x, current_position_y: y) if valid_move?(x, y)
+        # if game.check?(color) comes up false,
+        # even once, assign  true
+        success = true unless game.check?(color)
+        # reset any attempted moves
+        update_attributes(current_position_x: starting_x, current_position_y: starting_y)
+      end
+    end
+    success
+  end
+
+
   def castling?(x, y)
     # if king is currently in check, castling is false
     # if king would castle in to check, castling is false

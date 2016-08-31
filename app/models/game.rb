@@ -33,10 +33,23 @@ class Game < ActiveRecord::Base
 
     opponents.each do |piece|
       if piece.valid_move?(king.current_position_x, king.current_position_y)
+        @piece_causing_check = piece
         return true
       end
     end
     false
+  end
+
+  def checkmate?(color)
+    checked_king = pieces.find_by(type: 'King', color: color)
+    return false unless check?(color)
+    # either there's a valid move for the king or he can capture
+    return false if checked_king.can_move_out_of_check?
+    
+    # or another piece can capture the check causing piece
+    # or another piece can block the check causing piece
+    # else
+    # checkmate = true
   end
 
   def populate_board!

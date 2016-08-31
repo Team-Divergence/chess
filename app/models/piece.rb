@@ -19,6 +19,37 @@ class Piece < ActiveRecord::Base
     end
   end
 
+  # method to determine if an opposing piece can block check
+  # this method is called to determine checkmate.
+  def can_be_blocked?(king)
+    # get all possible squares that could be used to obstruct check
+    obstruction_array = obstructed_squares(king.x_position, king.y_position)
+
+    opponents = game.pieces_remaining(!color)
+    # for each opponent, iterate through all squares that could obstruct
+    opponents.each do |opponent|
+      next if opponent.type == 'King'
+      obstruction_array.each do |square|
+        # return true if we find even one way to obstruct check
+        return true if opponent.valid_move?(square[0], square[1])
+      end
+    end
+    false
+  end
+
+ # method to determine if a piece can be captured.
+ # called to determine checkmate
+  def can_be_captured?
+    opponents = game.pieces_remaining(!color)
+    opponents.each do |opponent|
+      # for each opponent, see if the checking piece can be captured
+      if opponent.valid_move?(x_position, y_position)
+        return true
+      end
+    end
+    false
+  end
+
   def capture?(move_to_x, move_to_y)
     capture_piece = game.pieces.find_by(current_position_x: move_to_x, current_position_y: move_to_y)
     capture_piece && capture_piece.color != color
@@ -48,7 +79,7 @@ class Piece < ActiveRecord::Base
     difference_x = (move_to_x - self.current_position_x) # .abs
     difference_y = (move_to_y - self.current_position_y) # .abs
     count = 1
-    
+
     # vertical
     if difference_x == 0
       while count < difference_y.abs
