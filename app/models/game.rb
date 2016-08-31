@@ -58,11 +58,7 @@ class Game < ActiveRecord::Base
 
     # or another piece can block the check causing piece
     # we need to check if any of the friends can make a valid move in between their king the @piece_causing_check
-    # Black king = (4, 0) White Queen (4, 4) = 0, -4 we need to check 4, 1; 4, 2
-    # White Queen = (1, 3)
-    # (3, -3)
-
-    true
+    # true
   end
 
   def populate_board!
