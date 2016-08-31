@@ -42,14 +42,27 @@ class Game < ActiveRecord::Base
 
   def checkmate?(color)
     checked_king = pieces.find_by(type: 'King', color: color)
+    friends = pieces.where(color: checked_king.color).to_a
+
     return false unless check?(color)
     # either there's a valid move for the king or he can capture
     return false if checked_king.can_move_out_of_check?
-    
+
     # or another piece can capture the check causing piece
+    friends.each do |friend|
+      if friend.capture?(@piece_causing_check.current_position_x, @piece_causing_check.current_position_y)
+        return false
+      end
+    end
+
+
     # or another piece can block the check causing piece
-    # else
-    # checkmate = true
+    # we need to check if any of the friends can make a valid move in between their king the @piece_causing_check
+    # Black king = (4, 0) White Queen (4, 4) = 0, -4 we need to check 4, 1; 4, 2
+    # White Queen = (1, 3)
+    # (3, -3)
+
+    true
   end
 
   def populate_board!

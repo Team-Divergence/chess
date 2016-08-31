@@ -19,37 +19,6 @@ class Piece < ActiveRecord::Base
     end
   end
 
-  # method to determine if an opposing piece can block check
-  # this method is called to determine checkmate.
-  def can_be_blocked?(king)
-    # get all possible squares that could be used to obstruct check
-    obstruction_array = obstructed_squares(king.x_position, king.y_position)
-
-    opponents = game.pieces_remaining(!color)
-    # for each opponent, iterate through all squares that could obstruct
-    opponents.each do |opponent|
-      next if opponent.type == 'King'
-      obstruction_array.each do |square|
-        # return true if we find even one way to obstruct check
-        return true if opponent.valid_move?(square[0], square[1])
-      end
-    end
-    false
-  end
-
- # method to determine if a piece can be captured.
- # called to determine checkmate
-  def can_be_captured?
-    opponents = game.pieces_remaining(!color)
-    opponents.each do |opponent|
-      # for each opponent, see if the checking piece can be captured
-      if opponent.valid_move?(x_position, y_position)
-        return true
-      end
-    end
-    false
-  end
-
   def capture?(move_to_x, move_to_y)
     capture_piece = game.pieces.find_by(current_position_x: move_to_x, current_position_y: move_to_y)
     capture_piece && capture_piece.color != color
@@ -170,61 +139,3 @@ class Piece < ActiveRecord::Base
     false
   end
 end
-
-
-
-=begin
-  def is_obstructed?(x, y)
-    piece = self
-    current_x = piece.current_position_x
-    current_y = piece.current_position_y
-    x_difference = current_x - x
-    y_difference = current_y - y
-    all_pieces = Game.find(game_id).pieces
-    # (3, 4) -> (1, 3)
-    # x_difference: 2
-    # y_difference: 1
-    if (x_difference.abs != y_difference.abs) && (x_difference != 0) && (y_difference != 0)
-      # puts "Invalid input"
-      # flash.now[:alert] = 'Invalid input'
-      return
-    end
-
-    check = false
-    new_x = x
-    new_y = y
-
-    while !check
-      # starting from the destination, moves through
-      # each square in between the destination and current
-
-      if new_x > current_x
-        new_x -= 1
-      elsif new_x < current_x
-        new_x += 1
-      end
-
-      if new_y > current_y
-        new_y -= 1
-      elsif new_y < current_y
-        new_y += 1
-      end
-
-      # if at current position stop looping
-      if (new_x == current_x) && (new_y == current_y)
-        check = true
-      # else, check position of each piece on the board
-      # to see if it is obstructing
-      else
-        all_pieces.each do |p|
-          if (p.current_position_x == new_x) && (p.current_position_y == new_y)
-            return true
-          end
-        end
-      end
-
-    end
-
-    false
-  end
-=end
