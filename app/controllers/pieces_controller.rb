@@ -11,8 +11,11 @@ class PiecesController < ApplicationController
     old_y = @piece.current_position_y
     x = params[:piece][:current_position_x].to_i
     y = params[:piece][:current_position_y].to_i
+
     if @piece.valid_move?(x, y)
       @piece.update_attributes(current_position_x: x, current_position_y: y)
+      # we also have to perform any capture that happens from this move, before checking check?
+      
       if @game.check?(@piece.color)
         @piece.update_attributes(current_position_x: old_x, current_position_y: old_y)
         return render text: 'Invalid move!', status: :unauthorized
