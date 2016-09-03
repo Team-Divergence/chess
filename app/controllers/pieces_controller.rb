@@ -19,6 +19,9 @@ class PiecesController < ApplicationController
       end
       @piece.update_attributes(current_position_x: old_x, current_position_y: old_y)
       @piece.move_to!(x, y)
+      base_uri = "https://divergence-chess.firebaseio.com/"
+      firebase = Firebase::Client.new(base_uri)
+      firebase.set("pieces/#{@piece.id}", current_position_x: x, current_position_y: y)
       render json: nil, status: :ok
       # redirect_to game_path(@game)
     else
