@@ -15,7 +15,7 @@ class Pawn < Piece
     if can_promote?(y) && capture_piece.present?
       capture_piece.destroy()
       promotion(x, y)
-    elsif can_promote(y)
+    elsif can_promote?(y)
       promotion(x, y)
     else
       super(x, y)

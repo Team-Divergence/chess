@@ -78,45 +78,45 @@
       }
     });
 
-    // // Pawn Promotion
-    // function isPawn($piece) {
-    //   return ($piece.data('piece-type') == 'Pawn');
-    // }
-    //
-    // function isMovingToLastRank(y) {
-    //   return ((y == 0) || (y == 7));
-    // }
-    //
-    // function isPawnPromotion( $piece, y) {
-    //   return (isPawn($piece) && isMovingToLastRank(y));
-    // }
-    //
-    // // Modal
-    // function openModal (modalId, callback) {
-    //   var $modal = $(modalId);
-    //
-    //   // Change modal-state checkbox to checked
-    //   $modal.prop("checked", true);
-    //
-    //   if ($modal.is(":checked")) {
-    //     $("body").addClass("modal-open");
-    //   } else {
-    //     $("body").removeClass("modal-open");
-    //   }
-    //
-    //   $(".modal-fade-screen, .modal-close").on("click", function() {
-    //     $(".modal-state:checked").prop("checked", false).change();
-    //   });
-    //
-    //   $(".modal-inner").on("click", function(e) {
-    //     e.stopPropagation();
-    //   });
-    //
-    //   // When form is submitted, pass input value into callback function
-    //   $('.promo-selection-submit input').on('click', function() {
-    //     callback( $('.promo-selection-choice input').val() );
-    //   });
-    // }
+    // Pawn Promotion
+    function isPawn($piece) {
+      return ($piece.data('piece-type') == 'Pawn');
+    }
+
+    function isMovingToLastRank(y) {
+      return ((y == 0) || (y == 7));
+    }
+
+    function isPawnPromotion( $piece, y) {
+      return (isPawn($piece) && isMovingToLastRank(y));
+    }
+
+    // Modal
+    function openModal (modalId, callback) {
+      var $modal = $(modalId);
+
+      // Change modal-state checkbox to checked
+      $modal.prop("checked", true);
+
+      if ($modal.is(":checked")) {
+        $("body").addClass("modal-open");
+      } else {
+        $("body").removeClass("modal-open");
+      }
+
+      $(".modal-fade-screen, .modal-close").on("click", function() {
+        $(".modal-state:checked").prop("checked", false).change();
+      });
+
+      $(".modal-inner").on("click", function(e) {
+        e.stopPropagation();
+      });
+
+      // When form is submitted, pass input value into callback function
+      $('.promo-selection-submit input').on('click', function() {
+        callback( $('.promo-selection-choice input').val() );
+      });
+    }
 
   });
 
