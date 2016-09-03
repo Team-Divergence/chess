@@ -10,9 +10,13 @@ class Pawn < Piece
 
   def move_to!(x, y)
     return false unless valid_move?(x, y)
+    capture_piece = game.pieces.find_by(current_position_x: x, current_position_y: y)
 
-    if can_promote?(y)
-      promotion(x, y) # && super(x, y)
+    if can_promote?(y) && capture_piece.present?
+      capture_piece.destroy()
+      promotion(x, y)
+    elsif can_promote(y)
+      promotion(x, y)
     else
       super(x, y)
     end
@@ -20,16 +24,13 @@ class Pawn < Piece
 
   def promotion(x, y)
      update_attributes(
-      current_position_x: nil,
-      current_position_y: nil,
-    )
-    game.pieces.create(
       current_position_x: x,
       current_position_y: y,
       type: 'Queen',
       has_moved: true,
       color: color,
     )
+    game.switch_turns
   end
 
   def valid_move?(move_to_x, move_to_y)
