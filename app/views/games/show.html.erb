@@ -2,9 +2,37 @@
 
 <%= render 'shared/gameboard' %>
 
+<div class="modal">
+  <input class="modal-state" id="promo-modal" type="checkbox" />
+  <div class="modal-fade-screen">
+    <div class="modal-inner">
+      <div class="modal-close" for="promo-modal"></div>
+        <hgroup>
+          <h4>Pawn Promotion</h4>
+          <h6>Choose Your Piece:</h6>
+        </hgroup>
+        <form action="#" class="promotion-choice">
+          <div class="promo-selection-container">
+            <% ['Queen', 'Bishop', 'Rook', 'Knight'].each do |name| %>
+              <div class="promo-selection-choice">
+                <label for="<%= name.downcase %>">
+                  <%= name %>
+                </label>
+                <input type="radio" name="piece-type" value="<%= name %>" id="<%= name.downcase %>">
+              </div>
+            <% end %>
+        </div>
+        <div class="promo-selection-submit">
+          <input type="submit">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <script>
   $(function() {
-    
+
     $('td a').click(function(ev) {
       ev.preventDefault();
     });
@@ -28,7 +56,7 @@
         var pieceLink = dropped.attr("href");
         var x = droppedOn.data("x-position");
         var y = droppedOn.data("y-position");
-        
+
         $.post(pieceLink, {
           _method: "PUT",
           piece: {
