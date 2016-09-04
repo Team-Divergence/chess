@@ -41,19 +41,11 @@ $(function() {
     }
   });
 
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyBPksTx_CuBtYcletVX8e89utAq35cl6hA",
-    authDomain: "divergence-chess.firebaseapp.com",
-    databaseURL: "https://divergence-chess.firebaseio.com",
-    storageBucket: "divergence-chess.appspot.com",
-  };
-  var fb = firebase.initializeApp(config);
+  var fb = firebase.initializeApp({databaseURL: "https://divergence-chess.firebaseio.com"});
   var database = firebase.database();
   var fbref = database.ref();
 
   fbref.child("pieces").on('child_changed', function(snapshot) {
-    //$('td a').addClass("highlight");
     $('.highlight').removeClass("highlight");
     var key = snapshot.getKey();
     var newX = snapshot.val().current_position_x;
