@@ -11,6 +11,7 @@ class Piece < ActiveRecord::Base
     #check move is not to the same square
     elsif current_position_x == move_to_x && current_position_y == move_to_y
       return false
+    #check move is not to square with piece of same color on it
     elsif move_to_piece.present? && self.color == move_to_piece.color
       return false
     else
@@ -74,14 +75,14 @@ class Piece < ActiveRecord::Base
     if difference_y == 0
       while count < difference_x.abs
         if difference_x < 0
-          piece = game.pieces.find_by(current_position_x: move_to_x - count, current_position_y: move_to_y)
+          piece = game.pieces.find_by(current_position_x: move_to_x + count, current_position_y: move_to_y)
           if piece.present?
             return true
           else
             count += 1
           end
         else
-          piece = game.pieces.find_by(current_position_x: move_to_x + count, current_position_y: move_to_y)
+          piece = game.pieces.find_by(current_position_x: move_to_x - count, current_position_y: move_to_y)
           if piece.present?
             return true
           else
