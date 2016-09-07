@@ -48,7 +48,7 @@ class Piece < ActiveRecord::Base
     difference_x = (move_to_x - self.current_position_x) # .abs
     difference_y = (move_to_y - self.current_position_y) # .abs
     count = 1
-    
+
     # vertical
     if difference_x == 0
       while count < difference_y.abs

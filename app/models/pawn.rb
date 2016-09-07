@@ -1,4 +1,38 @@
 class Pawn < Piece
+
+  def can_promote?(y)
+    if color == 'white'
+      y == 0
+    else
+      y == 7
+    end
+  end
+
+  def move_to!(x, y)
+    return false unless valid_move?(x, y)
+    capture_piece = game.pieces.find_by(current_position_x: x, current_position_y: y)
+
+    if can_promote?(y) && capture_piece.present?
+      capture_piece.destroy()
+      promotion(x, y)
+    elsif can_promote?(y)
+      promotion(x, y)
+    else
+      super(x, y)
+    end
+  end
+
+  def promotion(x, y)
+     update_attributes(
+      current_position_x: x,
+      current_position_y: y,
+      type: 'Queen',
+      has_moved: true,
+      color: color,
+    )
+    game.switch_turns
+  end
+
   def valid_move?(move_to_x, move_to_y)
 
     return false unless super
@@ -12,14 +46,14 @@ class Pawn < Piece
         #
       else
         return false
-      end 
+      end
     else
       if color == 'white' && (1..2) === (current_position_y - move_to_y)
         #
-      elsif color == 'black' && (1..2) === (move_to_y - current_position_y) 
+      elsif color == 'black' && (1..2) === (move_to_y - current_position_y)
         #
       else
-        return false      
+        return false
       end
     end
 
