@@ -1,6 +1,10 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+.clear {
+  clear: both;
+}
+
 html, body {
   margin: 0px;
   width: 100%;

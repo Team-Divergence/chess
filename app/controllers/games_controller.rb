@@ -16,22 +16,18 @@ class GamesController < ApplicationController
   end
 
   def show
-    @game = Game.find_by_id(params[:id])
-
-    if @game.blank?
-      return render text: 'Not Found :(', status: :not_found
-    end
+    @game = Game.find(params[:id])    
   end
 
   def update
     @game = Game.find(params[:id])
 
-    if !@game.black_user.nil?
-      return render text: 'Not Allowed', status: :forbidden
-    end
-
-    @game.update_attributes(black_user_id: current_user.id)
-    redirect_to game_path(@game)
+    if @game.white_user != current_user && @game.black_user.nil?
+      @game.update_attributes(black_user_id: current_user.id)
+      redirect_to game_path(@game)
+    else
+      render text: 'You cannot join this game!', status: :forbidden
+    end    
   end
 
   private

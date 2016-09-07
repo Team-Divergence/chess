@@ -32,15 +32,7 @@ RSpec.describe GamesController, type: :controller do
       g = Game.create(name: 'Divergence')
       get :show, id: g.id
       expect(response).to have_http_status(:success)
-    end 
-
-    it 'should return a 404 error if the game is not found' do
-      user = FactoryGirl.create(:user)
-      sign_in user
-
-      get :show, id: 'TACOCAT'
-      expect(response).to have_http_status(:not_found)
-    end
+    end    
   end  
 
   describe 'games#create action' do
