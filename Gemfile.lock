@@ -63,8 +63,12 @@ GEM
       multipart-post (>= 1.2, < 3)
     figaro (1.1.1)
       thor (~> 0.14)
+    firebase (0.2.6)
+      httpclient
+      json
     hashie (3.4.4)
     hike (1.2.3)
+    httpclient (2.8.2.3)
     i18n (0.7.0)
     jbuilder (2.5.0)
       activesupport (>= 3.0.0, < 5.1)
@@ -202,6 +206,7 @@ DEPENDENCIES
   devise (>= 3.2.4)
   factory_girl_rails
   figaro
+  firebase
   jbuilder (~> 2.0)
   jquery-rails
   omniauth-facebook

@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails_12factor', group: :production
 gem 'simple_form'
+gem 'firebase'
 
 # Use Rubocop style guide
 gem 'rubocop', '~> 0.41.2', require: false
