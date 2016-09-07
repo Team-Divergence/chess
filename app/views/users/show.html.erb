@@ -1,8 +1,20 @@
-<h1>My Profile</h1>
-<br />
-<h1>Open Games</h1>
+<div class="booyah-box">
+  <div class="col-xs-4">
+    <%= image_tag 'user.png' %>
+  </div>
+
+  <div class="col-xs-8">
+    <h1><%= @user.email %></h1>
+    <h3>Joined Since: <%= @user.created_at.strftime("%B %d, %Y") %></h3>
+    <h4><%= @user.white_games.count %> total white games</h4>
+    <h4><%= @user.black_games.count %> total black games</h4>
+    <h4><%= @games_won.count %> total games won</h4>
+  </div>
+  <div class="clear"></div>
+</div>
 
 <!-- Listing of all open games to join -->
+<h1 class="text-center">Open Games</h1>
 <% @games.each do |game| %>
   <div class="booyah-box col-xs-10 col-xs-offset-1">
     <h1><%= game.name %></h1>
@@ -10,6 +22,40 @@
     <%= link_to 'Join Game!', game_path(game), method: 'put', class: 'btn btn-primary btn-large' %>    
   </div>
 <% end %>
+
+<div class="clear"></div>
+
+<!-- Check to see if current user played any white games -->
+<% if @user.white_games.present? %>
+  <h1 class="text-center">My White Games</h1>
+  <% @user.white_games.each do |game| %>
+    <div class="booyah-box col-xs-10 col-xs-offset-1">
+      <h2><%= link_to game.name, game_path(game) %></h2>
+      <br />
+      <% if game.black_user.present? %>
+        <b>VS. <%= game.black_user.email %></b>
+      <% end %>    
+    </div>  
+  <% end %>
+<% end %>
+
+<div class="clear"></div>
+
+<!-- Check to see if current user played any black games -->
+<% if @user.black_games.present? %>
+<h1 class="text-center">My Black Games</h1>
+  <% @user.black_games.each do |game| %>
+    <div class="booyah-box col-xs-10 col-xs-offset-1">
+      <h2><%= link_to game.name, game_path(game) %></h2>
+      <br />
+      <% if game.white_user.present? %>
+        <b>VS. <%= game.white_user.email %></b>
+      <% end %>    
+    </div>
+  <% end %>
+<% end %>
+
+
 
 
 
