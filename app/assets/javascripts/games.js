@@ -1,4 +1,4 @@
-$(document).on('turbolinks:load', function() {
+$(function() {
 
   var fb = firebase.initializeApp({databaseURL: "https://divergence-chess.firebaseio.com"});
   var database = firebase.database();
