@@ -1,5 +1,34 @@
 $(function() {
 
+  var fb = firebase.initializeApp({databaseURL: "https://divergence-chess.firebaseio.com"});
+  var database = firebase.database();
+  var fbref = database.ref();
+
+  $('td a').each(function(index) {
+    database.ref($(this).attr("href")).set({
+      current_position_x: $(this).parent().data('x-position'),
+      current_position_y: $(this).parent().data('y-position')
+    });
+  });
+
+  fbref.child("pieces").on('child_changed', function(snapshot) {
+    $('.highlight').removeClass("highlight");
+    var key = snapshot.getKey();
+    var newX = snapshot.val().current_position_x;
+    var newY = snapshot.val().current_position_y;
+    var square = $('td[data-x-position=' + newX + '][data-y-position=' + newY + ']');
+    var piece = $('a[href$=' + key + ']');
+    
+    if (square.find('.ui-draggable').length){
+      deadPiece = square.find('.ui-draggable');
+      database.ref(deadPiece.attr("href")).remove();
+      deadPiece.remove();
+    }
+    piece.detach().css({top: 0,left: 0}).appendTo(square);
+    square.addClass("highlight");
+
+  });
+
   $('td a').click(function(ev) {
     ev.preventDefault();
   });
@@ -39,28 +68,6 @@ $(function() {
       });
 
     }
-  });
-
-  var fb = firebase.initializeApp({databaseURL: "https://divergence-chess.firebaseio.com"});
-  var database = firebase.database();
-  var fbref = database.ref();
-
-  fbref.child("pieces").on('child_changed', function(snapshot) {
-    $('.highlight').removeClass("highlight");
-    var key = snapshot.getKey();
-    var newX = snapshot.val().current_position_x;
-    var newY = snapshot.val().current_position_y;
-    var square = $('td[data-x-position=' + newX + '][data-y-position=' + newY + ']');
-    var piece = $('a[href$=' + key + ']');
-    
-    if (square.find('.ui-draggable').length){
-      deadPiece = square.find('.ui-draggable');
-      database.ref(deadPiece.attr("href")).remove();
-      deadPiece.remove();
-    }
-    piece.detach().css({top: 0,left: 0}).appendTo(square);
-    square.addClass("highlight");
-
   });
 
 });
