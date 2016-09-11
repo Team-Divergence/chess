@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   resources :games
   resources :users, only: :show
   resources :pieces
+
+  post 'games/forfeit/:id' => 'games#forfeit'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
