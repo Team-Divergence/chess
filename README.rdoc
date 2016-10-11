@@ -1,6 +1,6 @@
 = Divergence Chess
 
-Divergence Chess is a chess web app that reinforces the rules of chess (check, checkmate, etc.) and allows users to play a game of chess together.
+Divergence Chess is a chess web app that enforces the rules of chess (check, checkmate, etc.) and allows users to play a game of chess together.
 
 == Contributors
 
