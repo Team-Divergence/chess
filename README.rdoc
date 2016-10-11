@@ -1,28 +1,27 @@
-== README
+= Divergence Chess
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Divergence Chess is a chess web app that reinforces the rules of chess (check, checkmate, etc.) and allows users to play a game of chess together.
 
-Things you may want to cover:
+== Contributors
 
-* Ruby version
+* {Jack Pipitone}[github.com/jackpip]
+* {BJ Voth}[github.com/bjvoth]
+* {Marc McArthur}[github.com/MarcMcArthur]
+* {Janet Mohler}[github.com/janetmohler]
+* {Emmanuel Jucaban}[github.com/EmmanuelJucaban]
 
-* System dependencies
+== Features
 
-* Configuration
+* Devise for user authentication and security
 
-* Database creation
+* jQuery for drag and drop of pieces
 
-* Database initialization
+* Firebase for realtime chess movements
 
-* How to run the test suite
+* postgreSQL for database and database queries
 
-* Services (job queues, cache servers, search engines, etc.)
+* Rspec for Test Driven Development
 
-* Deployment instructions
+* TravisCI for continuous integration
 
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+* Twitter Bootstrap 3 for CSS and components
