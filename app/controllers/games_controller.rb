@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  before_action :authenticate_user!  
+  before_action :authenticate_user!
 
   def new
     @game = Game.new
@@ -7,7 +7,7 @@ class GamesController < ApplicationController
 
   def create
     @game = current_user.white_games.create(game_params)
-    
+
     if @game.valid?
       redirect_to user_path(current_user)
     else
@@ -16,7 +16,7 @@ class GamesController < ApplicationController
   end
 
   def show
-    @game = Game.find(params[:id])    
+    @game = Game.find(params[:id])
   end
 
   def update
@@ -27,9 +27,22 @@ class GamesController < ApplicationController
       redirect_to game_path(@game)
     else
       render text: 'You cannot join this game!', status: :forbidden
-    end    
+    end
   end
 
+  def forfeit
+    @game = Game.find(params[:id])
+    if current_user.id == @game.white_user_id
+      @game.update_attributes(winning_user_id: @game.black_user_id)
+    end
+
+    if current_user.id == @game.black_user_id
+      @game.update_attributes(winning_user_id: @game.black_user_id)
+    end
+
+    redirect_to game_path(@game)
+  end
+  
   private
 
   def game_params

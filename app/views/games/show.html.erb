@@ -1,3 +1,20 @@
 <br /><br />
 
 <%= render 'shared/gameboard' %>
+
+<script>
+	$(function(){
+		$.ajax({
+			url: 'forfeit/<%= @game.id %>',
+			type: 'POST',
+			success: function(data){
+				if (<%= @game.winning_user_id %> === 1){
+					alert('White player is the winner!');
+				}
+				if (<%= @game.winning_user_id %> === 2){
+					alert('Black player is the winner!');
+				}
+			}
+		});
+	});
+</script>
