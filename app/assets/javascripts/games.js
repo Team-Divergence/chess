@@ -18,7 +18,7 @@ $(function() {
     var newY = snapshot.val().current_position_y;
     var square = $('td[data-x-position=' + newX + '][data-y-position=' + newY + ']');
     var piece = $('a[href$=' + key + ']');
-    
+
     if (square.find('.ui-draggable').length){
       deadPiece = square.find('.ui-draggable');
       database.ref(deadPiece.attr("href")).remove();
@@ -64,7 +64,7 @@ $(function() {
         $(ui.helper).css({top: 0,left: 0});
       })
       .done(function(msg) {
-      
+
       });
 
     }

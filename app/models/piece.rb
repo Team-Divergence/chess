@@ -138,6 +138,19 @@ class Piece < ActiveRecord::Base
     end
     false
   end
+
+  def update_firebase(x, y)
+    base_uri = "https://divergence-chess.firebaseio.com/"
+    firebase = Firebase::Client.new(base_uri)
+    i = 0
+    while i < 3
+      f = firebase.set("pieces/#{id}", current_position_x: x, current_position_y: y)
+      return true if f.success?
+      i += 1
+    end
+    return false
+  end
+
 end
 
 
