@@ -10,19 +10,27 @@ class PiecesController < ApplicationController
     Piece.transaction do
       x = params[:piece][:current_position_x].to_i
       y = params[:piece][:current_position_y].to_i
+
+      unless @game.turn == current_user.id
+        response = 'Not your turn' + ' - ' + @game.turn_color + ' turn'
+        return render text: response, status: :unauthorized
+      end
       if @piece.valid_move?(x, y)
         # we also have to perform any capture that happens from this move, before checking check?
         @piece.move_to!(x, y)
         if @game.check?(@piece.color) || !@piece.update_firebase(x, y)
           fail ActiveRecord::Rollback
         end
-        render json: nil, status: :ok
+        response = @game.turn_color + ' turn'
+        render text: response, status: :ok
       else
-        render text: 'Invalid move!', status: :unauthorized
+        response = 'Invalid move!' + ' - ' + @game.turn_color + ' turn'
+        render text: response, status: :unauthorized
       end
     end
     rescue ActiveRecord::Rollback
-      render text: 'Invalid move!', status: :unauthorized
+      response = 'Invalid move!' + ' - ' + @game.turn_color + ' turn'
+      render text: response, status: :unauthorized
   end
 
 

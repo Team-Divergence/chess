@@ -4,6 +4,7 @@ class Piece < ActiveRecord::Base
 
   def valid_move?(move_to_x, move_to_y)
 
+    return false unless color.capitalize == game.turn_color
     move_to_piece = game.pieces.find_by(current_position_x: move_to_x, current_position_y: move_to_y)
     #check move is on the board
     if move_to_x < 0 || move_to_x > 7 || move_to_y < 0 || move_to_y > 7
@@ -144,7 +145,7 @@ class Piece < ActiveRecord::Base
     firebase = Firebase::Client.new(base_uri)
     i = 0
     while i < 3
-      f = firebase.set("pieces/#{id}", current_position_x: x, current_position_y: y)
+      f = firebase.set("pieces/#{id}", current_position_x: x, current_position_y: y, p_color: color)
       return true if f.success?
       i += 1
     end

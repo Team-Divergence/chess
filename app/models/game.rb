@@ -39,6 +39,10 @@ class Game < ActiveRecord::Base
     false
   end
 
+  def turn_color
+    turn == white_user_id ? 'White' : 'Black'
+  end
+
   def populate_board!
     # Black Pieces
     (0..7).each do |i|
