@@ -16,10 +16,11 @@ $(function() {
     var key = snapshot.getKey();
     var newX = snapshot.val().current_position_x;
     var newY = snapshot.val().current_position_y;
+    var piece_color = snapshot.val().p_color;
     if (snapshot.val().p_color == 'white'){
-      var piece_color = 'Black';
+      var opp_color = 'Black';
     } else {
-      var piece_color = 'White';
+      var opp_color = 'White';
     }
     var square = $('td[data-x-position=' + newX + '][data-y-position=' + newY + ']');
     var piece = $('a[href$=' + key + ']');
@@ -30,8 +31,12 @@ $(function() {
       deadPiece.remove();
     }
     piece.detach().css({top: 0,left: 0}).appendTo(square);
+    if (snapshot.val().promoted == 'Queen'){
+      piece.children().attr("alt", piece_color + ' queen');
+      piece.children().attr("src", '/assets/' + piece_color + '-queen.png');
+    }
     square.addClass("highlight");
-    $('#game-message').html(piece_color + ' turn');
+    $('#game-message').html(opp_color + ' turn');
 
   });
 

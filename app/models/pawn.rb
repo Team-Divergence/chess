@@ -30,6 +30,7 @@ class Pawn < Piece
       has_moved: true,
       color: color,
     )
+    update_firebase(x, y, 'Queen')
     game.switch_turns
   end
 

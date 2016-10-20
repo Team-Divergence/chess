@@ -1,7 +1,6 @@
 class Piece < ActiveRecord::Base
   belongs_to :game
 
-
   def valid_move?(move_to_x, move_to_y)
 
     return false unless color.capitalize == game.turn_color
@@ -140,12 +139,12 @@ class Piece < ActiveRecord::Base
     false
   end
 
-  def update_firebase(x, y)
+  def update_firebase(x, y, promote=false)
     base_uri = "https://divergence-chess.firebaseio.com/"
     firebase = Firebase::Client.new(base_uri)
     i = 0
     while i < 3
-      f = firebase.set("pieces/#{id}", current_position_x: x, current_position_y: y, p_color: color)
+      f = firebase.set("pieces/#{id}", current_position_x: x, current_position_y: y, p_color: color, promoted: promote)
       return true if f.success?
       i += 1
     end
