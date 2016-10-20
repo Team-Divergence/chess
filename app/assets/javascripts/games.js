@@ -23,7 +23,7 @@ $(function() {
       var opp_color = 'White';
     }
     var square = $('td[data-x-position=' + newX + '][data-y-position=' + newY + ']');
-    var piece = $('a[href$=' + key + ']');
+    var piece = $("a[href='/pieces/" + key + "']");
 
     if (square.find('.ui-draggable').length){
       deadPiece = square.find('.ui-draggable');
