@@ -15,6 +15,10 @@ class PiecesController < ApplicationController
         response = 'Not your turn' + ' - ' + @game.turn_color + ' turn'
         return render text: response, status: :unauthorized
       end
+      unless @piece.color.capitalize == @game.turn_color
+        response = 'Invalid move!' + ' - ' + @game.turn_color + ' turn'
+        return render text: response, status: :unauthorized
+      end
       if @piece.valid_move?(x, y)
         # we also have to perform any capture that happens from this move, before checking check?
         @piece.move_to!(x, y)

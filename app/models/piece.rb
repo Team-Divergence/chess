@@ -3,7 +3,6 @@ class Piece < ActiveRecord::Base
 
   def valid_move?(move_to_x, move_to_y)
 
-    return false unless color.capitalize == game.turn_color
     move_to_piece = game.pieces.find_by(current_position_x: move_to_x, current_position_y: move_to_y)
     #check move is on the board
     if move_to_x < 0 || move_to_x > 7 || move_to_y < 0 || move_to_y > 7
