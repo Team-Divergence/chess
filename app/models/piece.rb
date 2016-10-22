@@ -1,7 +1,6 @@
 class Piece < ActiveRecord::Base
   belongs_to :game
 
-
   def valid_move?(move_to_x, move_to_y)
 
     move_to_piece = game.pieces.find_by(current_position_x: move_to_x, current_position_y: move_to_y)
@@ -138,6 +137,19 @@ class Piece < ActiveRecord::Base
     end
     false
   end
+
+  def update_firebase(x, y, promote=false)
+    base_uri = "https://divergence-chess.firebaseio.com/"
+    firebase = Firebase::Client.new(base_uri)
+    i = 0
+    while i < 3
+      f = firebase.set("pieces/#{id}", current_position_x: x, current_position_y: y, p_color: color, promoted: promote)
+      return true if f.success?
+      i += 1
+    end
+    return false
+  end
+
 end
 
 

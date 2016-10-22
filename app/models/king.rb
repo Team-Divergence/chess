@@ -3,6 +3,7 @@ class King < Piece
   def castle_move
     update_attributes(current_position_x: @new_king_x, current_position_y: current_position_y, has_moved: true)
     @castle_rook.update_attributes(current_position_x: @new_rook_x, current_position_y: current_position_y, has_moved: true)
+    @castle_rook.update_firebase(@new_rook_x, current_position_y)
   end
 
   def valid_move?(move_to_x, move_to_y)
