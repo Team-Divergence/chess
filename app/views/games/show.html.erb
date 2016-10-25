@@ -1,4 +1,4 @@
-<div id="game-message" class="alert alert-info text-center"><%= @game.turn_color %> turn</div>
+<div id="game-message" class="alert alert-info text-center"><%= @game.turn_color %> turn. <%= @game.check?(@game.turn_color.downcase) ? " Check!" : "" %></div>
 
 <div class="col-xs-12 col-md-6 col-md-offset-3"><%= render 'shared/gameboard' %></div>
 

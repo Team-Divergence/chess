@@ -38,7 +38,12 @@ $(function() {
     }
     piece.detach().css({top: 0,left: 0}).appendTo(square);
     square.addClass("highlight");
-    $('#game-message').html(opp_color + ' turn');
+    if (snapshot.val().check){
+      var checkMessage = "Check!"
+    } else {
+      var checkMessage = ""
+    }
+    $('#game-message').html(opp_color + ' turn. ' + checkMessage);
 
   });
 
