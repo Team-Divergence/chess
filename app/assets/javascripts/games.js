@@ -30,11 +30,13 @@ $(function() {
       database.ref(deadPiece.attr("href")).remove();
       deadPiece.remove();
     }
-    piece.detach().css({top: 0,left: 0}).appendTo(square);
     if (snapshot.val().promoted == 'Queen'){
-      piece.children().attr("alt", piece_color + ' queen');
-      piece.children().attr("src", '/assets/' + piece_color + '-queen.png');
+      console.log(piece.html());
+      piece.html("<img alt='" + piece_color + " queen' src=/assets/" + piece_color + "-queen.png>");
+      piece.attr("class", "promoted");
+      $(document).find('.promoted').draggable();
     }
+    piece.detach().css({top: 0,left: 0}).appendTo(square);
     square.addClass("highlight");
     $('#game-message').html(opp_color + ' turn');
 
@@ -54,6 +56,12 @@ $(function() {
   $('td a').draggable({
     revert: "invalid",
     revertDuration: 0
+  });
+
+  fbref.child("pieces").on('child_removed', function(snapshot) {
+    var key = snapshot.getKey();
+    var piece = $("a[href='/pieces/" + key + "']");
+    piece.remove();
   });
 
   $('td').droppable({

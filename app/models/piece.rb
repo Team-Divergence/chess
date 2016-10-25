@@ -1,5 +1,6 @@
 class Piece < ActiveRecord::Base
   belongs_to :game
+  has_many :moves
 
   def valid_move?(move_to_x, move_to_y)
 
@@ -19,7 +20,11 @@ class Piece < ActiveRecord::Base
   end
 
   def capture?(move_to_x, move_to_y)
-    capture_piece = game.pieces.find_by(current_position_x: move_to_x, current_position_y: move_to_y)
+    if en_passant?(move_to_x, move_to_y)
+      capture_piece = game.moves.last.piece
+    else
+      capture_piece = game.pieces.find_by(current_position_x: move_to_x, current_position_y: move_to_y)
+    end
     capture_piece && capture_piece.color != color
   end
 
@@ -28,10 +33,15 @@ class Piece < ActiveRecord::Base
       raise 'Not valid move!'
     end
     # variable to see if space is occupied
-    capture_piece = game.pieces.find_by(current_position_x: move_to_x, current_position_y: move_to_y)
+    if en_passant?(move_to_x, move_to_y)
+      capture_piece = game.moves.last.piece
+    else
+      capture_piece = game.pieces.find_by(current_position_x: move_to_x, current_position_y: move_to_y)
+    end
     # if space is occupied and it's a different color
     if capture?(move_to_x, move_to_y)
       capture_piece.destroy()
+      capture_piece.remove_from_firebase
     end
       update_attributes(current_position_x: move_to_x, current_position_y: move_to_y, has_moved: true)
       game.switch_turns
@@ -41,6 +51,13 @@ class Piece < ActiveRecord::Base
     "#{color}-#{type.downcase}.png"
   end
 
+  def en_passant?(move_to_x, move_to_y)
+    if last_move = game.moves.last
+      last_move.piece.type == "Pawn" && last_move.end_position_y == current_position_y && (last_move.start_position_y - last_move.end_position_y).abs == 2
+    else
+      false
+    end
+  end
 
   def obstructed?(move_to_x, move_to_y)
     # we need to know the squares in between
@@ -144,6 +161,18 @@ class Piece < ActiveRecord::Base
     i = 0
     while i < 3
       f = firebase.set("pieces/#{id}", current_position_x: x, current_position_y: y, p_color: color, promoted: promote)
+      return true if f.success?
+      i += 1
+    end
+    return false
+  end
+
+  def remove_from_firebase
+    base_uri = "https://divergence-chess.firebaseio.com/"
+    firebase = Firebase::Client.new(base_uri)
+    i = 0
+    while i < 3
+      f = firebase.delete("pieces/#{id}")
       return true if f.success?
       i += 1
     end

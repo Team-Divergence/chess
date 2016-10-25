@@ -8,6 +8,8 @@ class PiecesController < ApplicationController
 
   def update
     Piece.transaction do
+      start_x = @piece.current_position_x
+      start_y = @piece.current_position_y
       x = params[:piece][:current_position_x].to_i
       y = params[:piece][:current_position_y].to_i
 
@@ -26,6 +28,7 @@ class PiecesController < ApplicationController
           fail ActiveRecord::Rollback
         end
         response = @game.turn_color + ' turn'
+        @game.moves.create(piece: @piece, start_position_x: start_x, start_position_y: start_y, end_position_x: x, end_position_y: y)
         render text: response, status: :ok
       else
         response = 'Invalid move!' + ' - ' + @game.turn_color + ' turn'
