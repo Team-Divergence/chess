@@ -7,6 +7,7 @@ class Game < ActiveRecord::Base
   belongs_to :white_user, class_name: 'User'
   belongs_to :black_user, class_name: 'User'
   has_many :pieces
+  has_many :moves
 
   # Query the database for games that don't have a black player
   scope :open_games, -> { where(black_user_id: nil) }

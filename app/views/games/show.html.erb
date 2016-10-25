@@ -1,9 +1,15 @@
-<div id="game-message" class="alert alert-info text-center"><%= @game.turn_color %> turn</div>
+<div id="game-message" class="alert alert-info text-center"><%= @game.turn_color %> turn. <%= @game.check?(@game.turn_color.downcase) ? " Check!" : "" %></div>
 
 <div class="col-xs-12 col-md-6 col-md-offset-3"><%= render 'shared/gameboard' %></div>
 
 <p>White: <%= User.find(@game.white_user_id).email %></p>
 <p>Black: <%= User.find(@game.black_user_id).email %></p>
+
+<div class='container'>
+	<div class='row text-center'>
+		<button class='btn btn-danger text-center forfeit'>Forfeit</button>
+	</div>
+</div>
 
 <script>
 	$(function(){
