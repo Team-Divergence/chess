@@ -5,6 +5,12 @@
 <p>White: <%= User.find(@game.white_user_id).email %></p>
 <p>Black: <%= User.find(@game.black_user_id).email %></p>
 
+<div class='container'>
+	<div class='row text-center'>
+		<button class='btn btn-danger text-center forfeit'>Forfeit</button>
+	</div>
+</div>
+
 <script>
 	$(function(){
 		$.ajax({
